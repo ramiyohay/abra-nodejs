@@ -1,6 +1,6 @@
 const fs = require('fs');
 const sql = require('mssql');
-require('dotenv').config();
+require('dotenv').config(); 
 
 async function run() {
   const config = {
