@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: My Delivery Service
+  version: "1.0"
+paths:
+  /auth/register:
+    post:
+      summary: register user
+      requestBody:
+        required: true
+      responses:
+        '200':
+          description: OK
+  /auth/login:
+    post:
+      summary: login
+      requestBody:
+        required: true
+      responses:
+        '200':
+          description: OK
+  /packages:
+    post:
+      summary: create package
+    get:
+      summary: list packages
+  /drivers/available:
+    get:
+      summary: list available drivers
+  /deliveries/assign:
+    post:
+      summary: assign package to driver
+  /deliveries/report/today:
+    get:
+      summary: report delivered today

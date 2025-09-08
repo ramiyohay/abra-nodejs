@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    environment:
+      SA_PASSWORD: "StrongPass123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -U sa -P StrongPass123! -Q 'SELECT 1' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  initdb:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: initdb
+    depends_on:
+      mssql:
+        condition: service_healthy
+    environment:
+      SA_PASSWORD: "StrongPass123!"
+      DB_NAME: "delivery_db"
+    volumes:
+      - ./db.sql:/db.sql
+    entrypoint: >
+      /bin/bash -c "
+      /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P StrongPass123! -i /db.sql
+      "
+
+  nodeapp:
+    build: .
+    container_name: nodeapp
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      PORT: 3000
+      DB_HOST: mssql
+      DB_PORT: 1433
+      DB_NAME: delivery_db
+      DB_USER: sa
+      DB_PASS: StrongPass123!
+    depends_on:
+      mssql:
+        condition: service_healthy
+      initdb:
+        condition: service_completed_successfully
+    command: sh -c "npm run migrate && npm start"
+    ports:
+      - "3000:3000"

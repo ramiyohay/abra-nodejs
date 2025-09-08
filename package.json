@@ -1,0 +1,25 @@
+{
+  "name": "my-delivery-service",
+  "version": "1.0.0",
+  "description": "Delivery management service",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "migrate": "node migrations/run_migrations.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "joi": "^17.9.2",
+    "mssql": "^9.2.1",
+    "sequelize": "^6.33.0",
+    "swagger-ui-express": "^4.6.3",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
