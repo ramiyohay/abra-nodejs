@@ -8,7 +8,7 @@
 - SQL DDL in `migrations/ddl.sql`.
 - Dockerfile and docker-compose.yml.
 
-Server runs on `http://localhost:3000`
+Server runs on `http://localhost:3000` 
 
 ## Quick start (local)
 1. set values at .env
